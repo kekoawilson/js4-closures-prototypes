@@ -107,26 +107,28 @@ function outer() {
   */
   
   function counterFactory(value) {
-  
+    
     return {
-      inc: function(num) {
-        
+      inc: function() {
+        value ++
+        return value
     },
   
-      dec: function (num){
-
+      dec: function (){
+        value --
+        return value
     }
   }
+}
   
   
-  counter = counterFactory(10);
-  // counter.inc() // 11
-  // counter.inc() // 12
-  // counter.inc() // 13
-  // counter.dec() // 12
+  var counter = counterFactory(10);
+  counter.inc() // 11
+  counter.inc() // 12
+  counter.inc() // 13
+  counter.dec() // 12
   
-  
-  
+  // console.log(counter.inc());
   
   
   
@@ -149,18 +151,20 @@ function outer() {
   
     var welcomeText = 'You\'re doing awesome, keep it up ';
   
-    // code message function here.
+    function message(){
+      return welcomeText + firstname + ' ' + lastname + '.'
+    }
   
   
     //Uncommment this to return the value of your message function
-    //return message;
+    return message;
   
   }
   
   var greeting = motivation('Billy', 'Bob'); // 'You're doing awesome keep it up Billy Bob.
   
   
-  
+  // console.log(greeting());
   
   
   
@@ -191,10 +195,13 @@ function outer() {
     // Anything that is being returned is made public and can be invoked from
     // outside our lexical scope
     return {
-      // Code here.
+       publicMethod: function(){
+         return privateMethod()
+       }
     };
   
   })();
+  
   
   
   
@@ -210,12 +217,19 @@ function outer() {
     var secret = 143;
 
     return {
-      // Code here
+      addToSecret: function(num) {
+        return secret += num
+      },
+      takeAwayFromSecret: function(num) {
+        return secret -= num
+      }
     }
   }
   
-  
-  
+  var exposeSecret = secretNumber()
+  exposeSecret.addToSecret(1)
+  exposeSecret.takeAwayFromSecret(4)
+  // console.log(exposeSecret.addToSecret(1));
   /******************************************************************************\
       #PROBLEM-08
   \******************************************************************************/
@@ -243,5 +257,4 @@ function outer() {
       }, i * 1000)
     }
   }
-  timeOutCounter();
-  
+  timeOutCounter(); 
